@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import useFetch from './hooks/useFetch'
 
-function App() {
+const App = () => {
+  const { isLoading, apiData, serverError } = useFetch(
+    'https://api.github.com/users/aryaman2803'
+  )
+  console.log(apiData)
+  // const {
+  //   avatar_url,
+  //   bio = null,
+  //   blog,
+  //   company,
+  //   email,
+  //   followers,
+  //   followers_url,
+  //   following,
+  //   following_url,
+  //   html_url,
+  //   location,
+  //   public_repos,
+  //   repos_url,
+  //   name,
+  // } = apiData
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      {/* {isLoading && !serverError ? (
+        <h2>Loading...</h2>
+      ) : !apiData ? (
+        <h2>Loading...</h2>
+      ) : (
+        <div>
+          <h2>User: {apiData.name}</h2>
+        </div>
+      )} */}
+      {apiData && <h1>User: {apiData.name}</h1>}
+    </>
+  )
 }
 
-export default App;
+export default App
