@@ -1,38 +1,17 @@
 import useFetch from './hooks/useFetch'
+import Display from './Components/display/Display'
+import userDataContext from './hooks/userDataContext'
 
 const App = () => {
   const { isLoading, apiData, serverError } = useFetch(
     'https://api.github.com/users/aryaman2803'
   )
-  console.log(apiData)
-  // const {
-  //   avatar_url,
-  //   bio = null,
-  //   blog,
-  //   company,
-  //   email,
-  //   followers,
-  //   followers_url,
-  //   following,
-  //   following_url,
-  //   html_url,
-  //   location,
-  //   public_repos,
-  //   repos_url,
-  //   name,
-  // } = apiData
+  const userData = { isLoading, apiData, serverError }
   return (
     <>
-      {/* {isLoading && !serverError ? (
-        <h2>Loading...</h2>
-      ) : !apiData ? (
-        <h2>Loading...</h2>
-      ) : (
-        <div>
-          <h2>User: {apiData.name}</h2>
-        </div>
-      )} */}
-      {apiData && <h1>User: {apiData.name}</h1>}
+      <userDataContext.Provider value={userData}>
+        <Display />
+      </userDataContext.Provider>
     </>
   )
 }
