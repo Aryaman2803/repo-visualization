@@ -1,8 +1,8 @@
 import useFetch from './hooks/useFetch'
-import Display from './Components/display/Display'
 import userDataContext from './hooks/userDataContext'
-
+import Container from './Components'
 const App = () => {
+  
   const { isLoading, apiData, serverError } = useFetch(
     'https://api.github.com/users/aryaman2803'
   )
@@ -10,7 +10,7 @@ const App = () => {
   return (
     <>
       <userDataContext.Provider value={userData}>
-        <Display />
+        <Container />
       </userDataContext.Provider>
     </>
   )
