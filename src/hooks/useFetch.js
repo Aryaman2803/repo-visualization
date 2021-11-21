@@ -42,7 +42,6 @@ const useFetch = (url) => {
         }
       }
       const a = lang.filter((item, i, ar) => ar.indexOf(item) === i)
-      console.log(a)
       await setoverAllLanguages(a)
     } catch (error) {
       console.log(error)
