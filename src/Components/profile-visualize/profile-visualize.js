@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import Navbar from '../navbar/Navbar'
 import userDataContext from '../../hooks/userDataContext'
-import styled from 'styled-components/macro'
 import UserDetails from './user-details/user-details'
+import LogoCommits from './logos-commits/logos-commits'
 
 const ProfileVisualize = () => {
   const { isLoading, apiData, serverError } = useContext(userDataContext)
-  console.log(apiData)
+  // console.log(apiData)
   const {
     avatar_url,
     bio = null,
@@ -16,6 +16,7 @@ const ProfileVisualize = () => {
     name,
     location,
     created_at,
+    repos_url,
     // company,
     // email,
     // followers,
@@ -24,7 +25,6 @@ const ProfileVisualize = () => {
     // following_url,
     // location,
     // public_repos,
-    // repos_url,
   } = apiData
   return (
     <>
@@ -39,6 +39,7 @@ const ProfileVisualize = () => {
         location={location}
         created_at={created_at}
       />
+      <LogoCommits />
     </>
   )
 }
