@@ -5,7 +5,7 @@ import UserDetails from './user-details/user-details'
 import LogoCommits from './logos-commits/logos-commits'
 
 const ProfileVisualize = () => {
-  const { isLoading, apiData, serverError } = useContext(userDataContext)
+  const { isLoading, apiData, serverError, overAllLanguages } = useContext(userDataContext)
   // console.log(apiData)
   const {
     avatar_url,
@@ -39,7 +39,7 @@ const ProfileVisualize = () => {
         location={location}
         created_at={created_at}
       />
-      <LogoCommits />
+      <LogoCommits overAllLanguages={overAllLanguages}/>
     </>
   )
 }

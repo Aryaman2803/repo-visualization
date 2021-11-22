@@ -28,7 +28,7 @@ const useFetch = (url) => {
       setIsLoading(false)
     }
   }
-  
+
   const langURL = url + '/repos'
   const overallLanguage = async () => {
     try {
@@ -42,9 +42,9 @@ const useFetch = (url) => {
         }
       }
       const a = lang.filter((item, i, ar) => ar.indexOf(item) === i)
-      await setoverAllLanguages(a)
+      setoverAllLanguages(a)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
 

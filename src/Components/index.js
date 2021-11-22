@@ -24,11 +24,12 @@ const Container = () => {
   return (
     <>
       <ContainerWrapper>
-        {}
         {isLoading ? (
           <OverrideWrapper>
             <RotateLoader size={30} color='#24292f' margin={35} />
           </OverrideWrapper>
+        ) : serverError ? (
+          <h1>Error</h1>
         ) : (
           <ProfileVisualize />
         )}
