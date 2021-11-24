@@ -94,6 +94,46 @@ const StyledBio = styled.div`
   font-weight: 300;
   margin-top: 0.8rem;
 `
+
+const StyledInfoContainer = styled.div`
+  display: flex;
+  margin-top: 1rem;
+`
+
+const StyledInfo = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+
+  & span {
+    text-align: center;
+    width: 130px;
+    padding: 7px 0;
+    font-weight: 600;
+  }
+  & span:nth-child(1) {
+    font-size: 1.5em;
+    background: linear-gradient(to right, #40acff 0%, #d678ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  & span:nth-child(2) {
+    font-size: 0.9em;
+    color: #24292f;
+    font-weight: 600;
+  }
+  @media (max-width: 500px) {
+    margin: 1rem 0.7rem;
+    & span {
+      width: 100px;
+    }
+  }
+`
 const UserDetails = ({
   avatar_url,
   bio,
@@ -103,6 +143,9 @@ const UserDetails = ({
   html_url,
   location,
   created_at,
+  public_repos,
+  followers,
+  following,
 }) => {
   const date = new Date(created_at)
   const date_month = format(date, 'MMMM dd, yyyy')
@@ -140,6 +183,21 @@ const UserDetails = ({
           {`Joined ${date_month}`}
         </a>
       </Location>
+      <StyledInfoContainer>
+        <StyledInfo>
+          <span>{public_repos}</span>
+          <span>REPOSITORIES</span>
+        </StyledInfo>
+        <StyledInfo>
+          <span>{followers}</span>
+          <span>FOLLOWERS</span>
+        </StyledInfo>
+        <StyledInfo>
+          <span>{following}</span>
+          <span>FOLLOWING</span>
+        </StyledInfo>
+      </StyledInfoContainer>
+
       {bio && <StyledBio>{bio}</StyledBio>}
     </Wrapper>
   )

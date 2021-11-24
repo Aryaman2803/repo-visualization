@@ -5,7 +5,8 @@ import UserDetails from './user-details/user-details'
 import LogoCommits from './logos-commits/logos-commits'
 
 const ProfileVisualize = () => {
-  const { isLoading, apiData, serverError, overAllLanguages } = useContext(userDataContext)
+  const { isLoading, apiData, serverError, overAllLanguages } =
+    useContext(userDataContext)
   // console.log(apiData)
   const {
     avatar_url,
@@ -16,30 +17,29 @@ const ProfileVisualize = () => {
     name,
     location,
     created_at,
-    repos_url,
-    // company,
-    // email,
-    // followers,
-    // followers_url,
-    // following,
-    // following_url,
-    // location,
-    // public_repos,
+    public_repos,
+    followers,
+    following,
   } = apiData
   return (
     <>
       <Navbar login={login} />
-      <UserDetails
-        avatar_url={avatar_url}
-        bio={bio}
-        blog={blog}
-        name={name}
-        login={login}
-        html_url={html_url}
-        location={location}
-        created_at={created_at}
-      />
-      <LogoCommits overAllLanguages={overAllLanguages}/>
+      {!isLoading && !serverError && (
+        <UserDetails
+          avatar_url={avatar_url}
+          bio={bio}
+          blog={blog}
+          name={name}
+          login={login}
+          html_url={html_url}
+          location={location}
+          created_at={created_at}
+          public_repos={public_repos}
+          followers={followers}
+          following={following}
+        />
+      )}
+      <LogoCommits overAllLanguages={overAllLanguages} />
     </>
   )
 }
