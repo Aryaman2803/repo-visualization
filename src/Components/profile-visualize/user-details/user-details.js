@@ -97,7 +97,7 @@ const StyledBio = styled.div`
 
 const StyledInfoContainer = styled.div`
   display: flex;
-  margin-top: 1rem;
+  margin-top: 0.3rem;
 `
 
 const StyledInfo = styled.div`
@@ -115,6 +115,7 @@ const StyledInfo = styled.div`
     width: 130px;
     padding: 7px 0;
     font-weight: 600;
+    letter-spacing: 1px;
   }
   & span:nth-child(1) {
     font-size: 1.5em;
@@ -131,6 +132,10 @@ const StyledInfo = styled.div`
     margin: 1rem 0.7rem;
     & span {
       width: 100px;
+    }
+    & span:nth-child(2){
+      font-size:12px;
+      letter-spacing: 1px;
     }
   }
 `
