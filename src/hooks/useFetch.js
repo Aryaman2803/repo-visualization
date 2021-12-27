@@ -64,7 +64,7 @@ const useFetch = (url) => {
     const allRepos = []
     for (let i in data) {
       // !if (data[i].size != 0 ) {
-      if (data[i].size != 0 && data[i].fork === false) {
+      if (data[i].size !== 0 && data[i].fork === false) {
         let repo = data[i].commits_url
         let newRepo = repo.replace('{/sha}', '')
         allRepos.push(newRepo)
@@ -91,7 +91,7 @@ const useFetch = (url) => {
 
           updateTimeline(finalTimeline, timeline)
           setcommitsTimeline(finalTimeline)
-          console.log(commitsTimeline)
+          console.log(finalTimeline)
         })
       )
       .catch((error) => {
