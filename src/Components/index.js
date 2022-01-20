@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import userDataContext from '../hooks/userDataContext'
 import { RotateLoader } from 'react-spinners'
 import styled from 'styled-components/macro'

@@ -8,6 +8,7 @@ const useFetch = (url) => {
   const [serverError, setServerError] = useState(null)
   const [overAllLanguages, setoverAllLanguages] = useState()
   const [commitsTimeline, setcommitsTimeline] = useState()
+  const [reposPerLanguage, setReposPerLanguage] = useState(null)
 
   const TOKEN = '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'
 
@@ -58,7 +59,41 @@ const useFetch = (url) => {
     }
     const a = lang.filter((item, i, ar) => ar.indexOf(item) === i)
     setoverAllLanguages(a)
+
+    //Get Repo Per Language
+    //Count individual language from array 'a' in array lang
+
+    const countRepoLang = lang.reduce(
+      (acc, value) => ({
+        ...acc,
+        [value]: (acc[value] || 0) + 1,
+      }),
+      {}
+    )
+    const countLang = []
+    for (let i in countRepoLang) {
+      const obj = { language: i, count: countRepoLang[i] }
+      countLang.push(obj)
+    }
+    setReposPerLanguage(countLang)
   }
+
+  //   for (let i in timeline) {
+  //     const search = timeline[i].date
+  //     if (finalTimeline.find((item) => item.date === search)) {
+  //       for (let j in finalTimeline) {
+  //         if (finalTimeline[j].date === search) {
+  //           finalTimeline[j].datesCount = finalTimeline[j].datesCount + 1
+  //         }
+  //       }
+  //     } else {
+  //       const obj = { datesCount: 1, date: search }
+  //       finalTimeline.push(obj)
+  //     }
+  //   }
+  // }
+
+  console.log('hhh', reposPerLanguage)
 
   const overallCommits = async (data) => {
     const allRepos = []
@@ -81,7 +116,7 @@ const useFetch = (url) => {
             let innerData = i.data
             for (let inn of innerData) {
               const fetchedTime = inn.commit.committer.date
-              const formattedDate = format(new Date(fetchedTime), 'yyyy-MM')
+              const formattedDate = format(new Date(fetchedTime), 'MM-yyyy')
               timeline.push({ date: formattedDate })
             }
           }
@@ -91,7 +126,7 @@ const useFetch = (url) => {
 
           updateTimeline(finalTimeline, timeline)
           setcommitsTimeline(finalTimeline)
-          console.log(finalTimeline)
+          // console.log(finalTimeline)
         })
       )
       .catch((error) => {
@@ -182,6 +217,7 @@ const useFetch = (url) => {
     serverError,
     overAllLanguages,
     commitsTimeline,
+    reposPerLanguage,
   }
 }
 export default useFetch

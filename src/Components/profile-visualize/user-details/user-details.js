@@ -98,6 +98,7 @@ const StyledBio = styled.div`
 const StyledInfoContainer = styled.div`
   display: flex;
   margin-top: 0.3rem;
+  margin-bottom:2rem;
 `
 
 const StyledInfo = styled.div`
