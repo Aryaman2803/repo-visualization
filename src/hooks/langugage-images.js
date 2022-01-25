@@ -47,5 +47,7 @@ export const getLanguageImages = [
   { imgSrc: './images/proglogos/png-48/webpack.png', name: 'webpack' },
   { imgSrc: './images/proglogos/png-48/webstorm.png', name: 'webstorm' },
   { imgSrc: './images/proglogos/png-48/wordpress.png', name: 'wordpress' },
+  { imgSrc: './images/proglogos/png-48/c-language.png', name: 'c' },
+  { imgSrc: './images/proglogos/png-48/c++-language.png', name: 'c++' },
   { imgSrc: './images/proglogos/png-48/yarn.png', name: 'yarn' },
 ]

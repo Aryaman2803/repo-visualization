@@ -40,7 +40,7 @@ const UserId = styled.a`
   font-size: 1.5rem;
   font-weight: 500;
   min-height: 35px;
-  //   border: 1px solid red;
+  //   border: 1px solid ;
   background: linear-gradient(to right, #40acff 0%, #d678ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -1,6 +1,7 @@
 import useFetch from './hooks/useFetch'
 import userDataContext from './hooks/userDataContext'
 import Container from './Components'
+
 const App = () => {
   const {
     isLoading,
@@ -19,11 +20,9 @@ const App = () => {
     reposPerLanguage,
   }
   return (
-    <>
-      <userDataContext.Provider value={userData}>
-        <Container />
-      </userDataContext.Provider>
-    </>
+    <userDataContext.Provider value={userData}>
+      <Container />
+    </userDataContext.Provider>
   )
 }
 

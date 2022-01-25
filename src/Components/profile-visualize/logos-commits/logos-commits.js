@@ -4,6 +4,7 @@ import { LanguageImage } from './LanguageImage'
 import CommitChart from '../../../hooks/commit-chart'
 const Wrapper = styled.section`
   background: #f8f9ff;
+  padding-bottom:2rem;
 `
 
 const GridContainer = styled.div`

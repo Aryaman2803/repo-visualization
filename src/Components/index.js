@@ -3,6 +3,7 @@ import userDataContext from '../hooks/userDataContext'
 import { RotateLoader } from 'react-spinners'
 import styled from 'styled-components/macro'
 import ProfileVisualize from './profile-visualize/profile-visualize'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 const OverrideWrapper = styled.span`
   display: flex;
@@ -24,6 +25,7 @@ const Container = () => {
   return (
     <>
       <ContainerWrapper>
+      <ReactQueryDevtools initialIsOpen={false} />
         {isLoading ? (
           <OverrideWrapper>
             <RotateLoader size={30} color='#24292f' margin={35} />
