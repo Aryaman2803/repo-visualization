@@ -13,7 +13,7 @@ const useFetch = (url) => {
   const [reposLanguagesUrl, setReposLanguagesUrl] = useState(null)
   const [starGazers, setStarGazers] = useState(null);
 
-  const TOKEN = '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'
+
 
   const langURL = url + '/repos?per_page=100'
   const config = {
