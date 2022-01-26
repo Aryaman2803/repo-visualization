@@ -31,6 +31,18 @@ const ReposStarsChart = () => {
       //   },
       // },
     },
+    animation: {
+      onComplete: () => {
+        delayed = true
+      },
+      delay: (context) => {
+        let delay = 0
+        if (context.type === 'data' && context.mode === 'default' && !delayed) {
+          delay = context.dataIndex * 100 + context.datasetIndex * 100
+        }
+        return delay
+      },
+    },
   }
   const data = {
     labels: repo_name,
