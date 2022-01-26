@@ -1,16 +1,4 @@
-import { useContext } from 'react'
-import userDataContext from './userDataContext'
-import { Doughnut } from 'react-chartjs-2'
-import useWindowDimensions from './useWindowDimensions'
-
-const ReposPerLanguage = () => {
-  const { reposPerLanguage } = useContext(userDataContext)
-  const { height, width } = useWindowDimensions()
-
-  const languages = Object.keys(reposPerLanguage)
-  const counts = Object.values(reposPerLanguage)
-
-  function getColors(length) {
+function getColors(length) {
     let gradient = {
       0: [255, 255, 255, 1],
       20: [255, 236, 179, 1],
@@ -64,37 +52,4 @@ const ReposPerLanguage = () => {
     return colors
   }
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: width < 500 ? 'bottom' : 'left',
-      },
-      title: {
-        display: true,
-        text: 'Repos Per Language',
-        font: {
-          size: 20,
-          style: 'normal',
-        },
-        padding: {
-          top: width < 500 ? 0 : 30,
-          bottom: width < 500 ? 10 : 0,
-        },
-      },
-    },
-  }
-  const data = {
-    labels: languages,
-    datasets: [
-      {
-        label: 'Commits',
-        backgroundColor: getColors(languages.length),
-        data: counts,
-      },
-    ],
-  }
-  return <Doughnut data={data} options={options} />
-}
-
-export default ReposPerLanguage
+  export default getColors;

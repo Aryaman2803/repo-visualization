@@ -10,7 +10,8 @@ const App = () => {
     overAllLanguages,
     commitsTimeline,
     reposPerLanguage,
-  } = useFetch('https://api.github.com/users/aryaman2803')
+    starGazers,
+  } = useFetch('https://api.github.com/users/facebook')
   const userData = {
     isLoading,
     apiData,
@@ -18,6 +19,7 @@ const App = () => {
     overAllLanguages,
     commitsTimeline,
     reposPerLanguage,
+    starGazers,
   }
   return (
     <userDataContext.Provider value={userData}>

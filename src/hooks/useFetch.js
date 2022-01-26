@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import format from 'date-fns/format'
+import { useQuery } from 'react-query'
 
 const useFetch = (url) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -10,47 +11,83 @@ const useFetch = (url) => {
   const [commitsTimeline, setcommitsTimeline] = useState()
   const [reposPerLanguage, setReposPerLanguage] = useState(null)
   const [reposLanguagesUrl, setReposLanguagesUrl] = useState(null)
+  const [starGazers, setStarGazers] = useState(null);
 
-  const TOKEN = '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'
-  useEffect(() => {
-    setIsLoading(true)
-    fetchData()
-  }, [url])
+  const TOKEN = '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'
 
   const langURL = url + '/repos?per_page=100'
   const config = {
     Authorization: `Bearer ${TOKEN}`,
   }
 
-  const fetchData = async () => {
-    try {
-      const reqone = await axios.get(url, { headers: config })
-      const reqtwo = await axios.get(langURL, { headers: config })
+  const {isLoading: isLoading1,data: reqone, isError:error1} = useQuery('reqone', async ()=> axios.get(url, {headers:config}), {refetchOnWindowFocus:false})
+  const {isLoading: isLoading2,data: reqtwo, isError:error2} = useQuery('reqtwo', async ()=> axios.get(langURL, {headers:config}), {refetchOnWindowFocus:false})
 
-      axios
-        .all([reqone, reqtwo])
-        .then(
-          axios.spread((...responses) => {
-            const respOne = responses[0]?.data
-            const respTwo = responses[1]?.data
+  const _isError = error1 || error2
+  // console.log("Error",_isError);
+  const _isLoading = isLoading1 || isLoading2
 
-            setApiData(respOne)
-            overallLanguage(respTwo)
-            overallCommits(respTwo)
 
-            setTimeout(() => {
-              setIsLoading(false)
-            }, 1700)
-          })
-        )
-        .catch((error) => {
-          setServerError(error)
-          setIsLoading(false)
-        })
-    } catch (error) {
-      setServerError(error)
+  // const fetchData = async () => {
+  //   try {
+  //     setIsLoading(true)
+  //     const reqone = await axios.get(url, { headers: config })
+  //     const reqtwo = await axios.get(langURL, { headers: config })
+
+  //     await axios.all([reqone, reqtwo]).then(
+  //       axios.spread((...responses) => {
+  //         const respOne = responses[0]?.data
+  //         const respTwo = responses[1]?.data
+
+  //         setApiData(respOne) //useState
+  //         overallLanguage(respTwo) //Function
+  //         overallCommits(respTwo) //Function
+
+  //         setTimeout(() => {
+  //           setIsLoading(false)
+  //         }, 1700)
+  //       })
+  //     )
+  //     // .catch((error) => {
+  //     //   setServerError(error)
+  //     //   setIsLoading(false)
+  //     // })
+  //   } catch (error) {
+  //     setServerError(error)
+  //     setIsLoading(false)
+  //   }
+  // }
+
+  useEffect(() => {
+    setIsLoading(true)
+    // fetchData()
+
+    if(_isLoading===false){
+      setApiData(reqone?.data)
+      overallLanguage(reqtwo?.data)
+      overallCommits(reqtwo?.data)
+      overallStargazers(reqtwo?.data)
+ 
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 1700)
+    }else if(_isError===true){
       setIsLoading(false)
+      setServerError(true)
     }
+  }, [url, _isLoading, _isError])
+
+  const overallStargazers = (data)=>{
+    const stargazers = []
+
+    for(const key in data){
+      const obj = {name: data[key].name, stars: data[key].stargazers_count}
+      stargazers.push(obj)
+    }
+
+    stargazers.sort((a,b)=>b.stars - a.stars)
+    if(stargazers.length >=10) stargazers.splice(10)
+    setStarGazers(stargazers)
   }
 
   const overallLanguage = (data) => {
@@ -85,23 +122,13 @@ const useFetch = (url) => {
     const allReposLanguagesURL = [] //stores all repos language_url
 
     for (let i in data) {
-      // !if (data[i].size != 0 ) {
       if (data[i].size !== 0 && data[i].fork === false) {
-        // if (data[i].size !== 0) {
         let repo = data[i].commits_url
         let newRepo = repo.replace('{/sha}', '')
         allRepos.push(newRepo)
 
-        // TIME.push(data[i].pushed_at)
-        // console.log(TIME);
-
         const timeline = []
         let finalTimeline = []
-
-        // updateTimeline(finalTimeline, timeline)
-        // setcommitsTimeline(finalTimeline)
-        // console.log(TIME)
-
         allReposLanguagesURL.push(data[i].languages_url)
       }
     }
@@ -111,6 +138,16 @@ const useFetch = (url) => {
     // getReposPerLanguages(allReposLanguagesURL)
   }
 
+  // const getTimeline2 = async (allRepos)=>{
+  //   const results = useQueries(
+  //     allRepos.map(repo=>{
+  //       return {
+  //         queryKey:['repo', repo.data],
+  //         queryFn:()=>axios.get(l, {headers:config})
+  //       }
+  //     })
+  //   )
+  // }
   const getTimeline = async (allRepos) => {
     const timeline = []
     axios
@@ -120,7 +157,6 @@ const useFetch = (url) => {
           for (let i of response) {
             let innerData = i.data
             for (let inn of innerData) {
-              const author = inn.commit.author.name
               const fetchedTime = inn.commit.committer.date
               const formattedDate = format(new Date(fetchedTime), 'MM-yyyy')
               timeline.push({ date: formattedDate })
@@ -172,6 +208,7 @@ const useFetch = (url) => {
     overAllLanguages,
     commitsTimeline,
     reposPerLanguage,
+    starGazers,
   }
 }
 export default useFetch
