@@ -92,7 +92,7 @@ const StyledBio = styled.div`
   font-size: 16px;
   color: #24292f;
   font-weight: 300;
-  margin-top: 0.8rem;
+  margin:0.8rem;
 `
 
 const StyledInfoContainer = styled.div`

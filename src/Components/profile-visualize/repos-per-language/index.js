@@ -84,7 +84,7 @@ const Break = styled.div`
   margin: 0 auto;
   background-image: linear-gradient(to right, #40acff 0%, #d678ff 100%);
   border-radius: 50%;
-  margin-bottom: 2rem;
+  // margin-bottom: 2rem;
 `
 const Repositories = () => {
   return (

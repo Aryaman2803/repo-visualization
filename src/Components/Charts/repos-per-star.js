@@ -22,14 +22,6 @@ const ReposStarsChart = () => {
         position: 'bottom',
         display: false,
       },
-      // title: {
-      //   display: true,
-      //   text: 'Most Starred',
-      //   font: {
-      //     size: 16,
-      //     style: 'normal',
-      //   },
-      // },
     },
     animation: {
       onComplete: () => {
@@ -48,14 +40,13 @@ const ReposStarsChart = () => {
     labels: repo_name,
     datasets: [
       {
-        label: 'Commits',
+        label: 'Stars',
         backgroundColor: getColors(repo_name.length),
         data: stars,
         minBarLength: 5,
       },
     ],
   }
-  console.log(stars, repo_name)
   return (
     <Div>
       <Bar options={options} data={data} />

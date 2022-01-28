@@ -95,7 +95,7 @@ const LogoCommits = ({ overAllLanguages }) => {
         </StyledCommits>
       </GridContainer>
     </Wrapper>
-  )
+  ) 
 }
 
 export default LogoCommits

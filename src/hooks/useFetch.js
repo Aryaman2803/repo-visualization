@@ -11,7 +11,8 @@ const useFetch = (url) => {
   const [commitsTimeline, setcommitsTimeline] = useState()
   const [reposPerLanguage, setReposPerLanguage] = useState(null)
   const [reposLanguagesUrl, setReposLanguagesUrl] = useState(null)
-  const [starGazers, setStarGazers] = useState(null);
+  const [starGazers, setStarGazers] = useState(null)
+  const [reposBySizeForkStars, setReposBySizeForkStars] = useState(null)
 
  
 
@@ -20,13 +21,24 @@ const useFetch = (url) => {
     Authorization: `Bearer ${TOKEN}`,
   }
 
-  const {isLoading: isLoading1,data: reqone, isError:error1} = useQuery('reqone', async ()=> axios.get(url, {headers:config}), {refetchOnWindowFocus:false})
-  const {isLoading: isLoading2,data: reqtwo, isError:error2} = useQuery('reqtwo', async ()=> axios.get(langURL, {headers:config}), {refetchOnWindowFocus:false})
+  const {
+    isLoading: isLoading1,
+    data: reqone,
+    isError: error1,
+  } = useQuery('reqone', async () => axios.get(url, { headers: config }), {
+    refetchOnWindowFocus: false,
+  })
+  const {
+    isLoading: isLoading2,
+    data: reqtwo,
+    isError: error2,
+  } = useQuery('reqtwo', async () => axios.get(langURL, { headers: config }), {
+    refetchOnWindowFocus: false,
+  })
 
   const _isError = error1 || error2
   // console.log("Error",_isError);
   const _isLoading = isLoading1 || isLoading2
-
 
   // const fetchData = async () => {
   //   try {
@@ -62,50 +74,66 @@ const useFetch = (url) => {
     setIsLoading(true)
     // fetchData()
 
-    if(_isLoading===false){
+    if (_isLoading === false) {
       setApiData(reqone?.data)
       overallLanguage(reqtwo?.data)
       overallCommits(reqtwo?.data)
       overallStargazers(reqtwo?.data)
- 
+      overallReposBySizeForkStars(reqtwo?.data)
+
       setTimeout(() => {
         setIsLoading(false)
       }, 1700)
-    }else if(_isError===true){
+    } else if (_isError === true) {
       setIsLoading(false)
       setServerError(true)
     }
   }, [url, _isLoading, _isError])
 
-  const overallStargazers = (data)=>{
+  const overallReposBySizeForkStars = (data) => {
+    const repos = []
+    for (const key in data) {
+      const obj = {
+        name: data[key].name,
+        size: data[key].size,
+        url: data[key].html_url,
+        language: data[key].language,
+        forks: data[key].forks,
+        stars: data[key].stargazers_count,
+        desc: data[key].description,
+      }
+      repos.push(obj)
+    }
+
+    setReposBySizeForkStars(repos)
+  }
+
+  const overallStargazers = (data) => {
     const stargazers = []
 
-    for(const key in data){
-      const obj = {name: data[key].name, stars: data[key].stargazers_count}
+    for (const key in data) {
+      const obj = { name: data[key].name, stars: data[key].stargazers_count }
       stargazers.push(obj)
     }
 
-    stargazers.sort((a,b)=>b.stars - a.stars)
-    if(stargazers.length >=10) stargazers.splice(10)
+    stargazers.sort((a, b) => b.stars - a.stars)
+    if (stargazers.length >= 10) stargazers.splice(10)
     setStarGazers(stargazers)
   }
 
   const overallLanguage = (data) => {
     const lang = []
     let countNull = 0
-
     for (const key in data) {
       if (data[key].language) {
         lang.push(data[key].language)
       } else countNull++
     }
-
     const a = lang.filter((item, i, ar) => ar.indexOf(item) === i)
     setoverAllLanguages(a)
 
     //Get Repo Per Language
     //Count individual language from array 'a' in array lang
-
     const countRepoLang = lang.reduce(
       (acc, value) => ({
         ...acc,
@@ -209,6 +237,7 @@ const useFetch = (url) => {
     commitsTimeline,
     reposPerLanguage,
     starGazers,
+    reposBySizeForkStars,
   }
 }
 export default useFetch

@@ -4,6 +4,7 @@ import userDataContext from '../../hooks/userDataContext'
 import UserDetails from './user-details/user-details'
 import LogoCommits from './logos-commits/logos-commits'
 import Repositories from './repos-per-language'
+import DisplayRepositories from './display-repositories/display-repositories'
 
 const ProfileVisualize = () => {
   const { isLoading, apiData, serverError, overAllLanguages } =
@@ -42,6 +43,7 @@ const ProfileVisualize = () => {
       )}
       <LogoCommits overAllLanguages={overAllLanguages} />
       <Repositories />
+      <DisplayRepositories />
     </>
   )
 }

@@ -11,6 +11,7 @@ const App = () => {
     commitsTimeline,
     reposPerLanguage,
     starGazers,
+    reposBySizeForkStars,
   } = useFetch('https://api.github.com/users/facebook')
   const userData = {
     isLoading,
@@ -20,6 +21,7 @@ const App = () => {
     commitsTimeline,
     reposPerLanguage,
     starGazers,
+    reposBySizeForkStars,
   }
   return (
     <userDataContext.Provider value={userData}>
