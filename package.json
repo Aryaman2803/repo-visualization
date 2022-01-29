@@ -9,7 +9,7 @@
     "axios": "^0.24.0",
     "chart.js": "^3.7.0",
     "date-fns": "^2.25.0",
-    "dotenv": "^14.3.0",
+    "dotenv": "^14.3.2",
     "localstorage-ttl": "^1.0.2",
     "lodash.groupby": "^4.6.0",
     "moment": "^2.29.1",

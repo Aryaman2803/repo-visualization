@@ -92,13 +92,13 @@ const StyledBio = styled.div`
   font-size: 16px;
   color: #24292f;
   font-weight: 300;
-  margin:0.8rem;
+  margin: 0.8rem;
 `
 
 const StyledInfoContainer = styled.div`
   display: flex;
   margin-top: 0.3rem;
-  margin-bottom:2rem;
+  margin-bottom: 2rem;
 `
 
 const StyledInfo = styled.div`
@@ -134,8 +134,8 @@ const StyledInfo = styled.div`
     & span {
       width: 100px;
     }
-    & span:nth-child(2){
-      font-size:12px;
+    & span:nth-child(2) {
+      font-size: 12px;
       letter-spacing: 1px;
     }
   }
@@ -172,7 +172,7 @@ const UserDetails = ({
         aria-label={`${name} profile picture`}
       />
       <UserName> {name} </UserName>
-      <UserId href={html_url} target='_blank' rel='noopener noreferrer'>
+      <UserId href={html_url} target='_blank' rel='noreferrer'>
         @{login}
       </UserId>
 

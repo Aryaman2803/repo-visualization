@@ -79,10 +79,10 @@ const RepoCardView = (props) => {
 
   return (
     <Wrapper>
-      <A href={url} target='_blank'>
+      <A href={url} target='_blank' rel='noreferrer'>
         <RepoName>
           <img
-            src='https://img.icons8.com/windows/32/000000/repository.png'
+            src='https://img.icons8.com/windows/32/000000/repository.png' width='20px' height='20px'
             alt={name}
           />
           {name}
@@ -96,6 +96,7 @@ const RepoCardView = (props) => {
           <Span>
             <img
               src='https://img.icons8.com/ios-glyphs/30/000000/star--v1.png'
+              width='18px' height='18px'
               alt='stars'
             />
             {stars}
