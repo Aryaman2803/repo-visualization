@@ -140,6 +140,15 @@ const StyledInfo = styled.div`
     }
   }
 `
+
+const Break = styled.div`
+  height: 3px;
+  width: 80%;
+  margin: 0 auto;
+  background-image: linear-gradient(to right, #40acff 0%, #d678ff 100%);
+  border-radius: 50%;
+  margin: 2rem 0;
+`
 const UserDetails = ({
   avatar_url,
   bio,
@@ -205,6 +214,7 @@ const UserDetails = ({
       </StyledInfoContainer>
 
       {bio && <StyledBio>{bio}</StyledBio>}
+      <Break></Break>
     </Wrapper>
   )
 }

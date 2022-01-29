@@ -1,22 +1,15 @@
 import { useContext } from 'react'
 import userDataContext from '../../hooks/userDataContext'
-import { eachMonthOfInterval, eachQuarterOfInterval, format } from 'date-fns'
+import { eachQuarterOfInterval, format } from 'date-fns'
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
-import _ from 'lodash'
+import groupBy from 'lodash.groupby'
 
 const CommitChart = () => {
-  const { isLoading, apiData, commitsTimeline } = useContext(userDataContext)
-  // const dateStart = format(new Date(apiData.created_at), 'yyyy-MM')
-  // const dateEnd = format(new Date(), 'yyyy-MM')
-
-  // const getTimeline = eachQuarterOfInterval({
-  //   start: new Date(dateStart),
-  //   end: new Date(dateEnd),
-  // })
+  const { apiData, commitsTimeline } = useContext(userDataContext)
 
   //Grouping commitsTimeline in quarters
-  const groupedByYear = _.groupBy(commitsTimeline, function (item) {
+  const groupedByYear = groupBy(commitsTimeline, function (item) {
     return item.date.substring(3)
   })
 
@@ -163,7 +156,6 @@ const CommitChart = () => {
   const mergerdCommits = [...updatedCommits, ...commits]
   //Merge Empty timeline array with commits timeline array
   const mergetTimeline = [...quarteredUpdatedZeros, ...timeline]
-
 
   let delayed
   const options = {

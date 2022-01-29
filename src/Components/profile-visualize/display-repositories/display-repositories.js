@@ -1,8 +1,90 @@
 import { useContext, useEffect, useState } from 'react'
 import userDataContext from '../../../hooks/userDataContext'
-import FlipMove from 'react-flip-move'
 import RepoCardView from './repo-card-view'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
+
+const Wrapper = styled.section`
+  @import url('https://fonts.googleapis.com/css2?family=Inter&family=Josefin+Sans:wght@400;700&display=swap');
+  background: #f8f9ff;
+  font-family: Inter, system, -apple-system, BlinkMacSystemFont, Roboto,
+    'Segoe UI', Arial, sans-serif;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  padding: 2rem 5rem;
+
+  @media (max-width: 500px) {
+    padding: 1rem;
+  }
+`
+const Container = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+`
+const Header = styled.div`
+  border: 1px solid pink;
+  display: inline-div;
+  padding: 1rem 0;
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: rgb(36, 41, 46);
+  margin-bottom: 1rem;
+
+  & a {
+    color: pink;
+    font-size: 1rem;
+    padding-top: 2rem;
+    color: rgb(106, 115, 125);
+    margin: 0px 1rem;
+  }
+`
+const SpanSelect = styled.span`
+  // border: 1px solid red;
+`
+const Select = styled.select`
+  width: 100px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+  color: #6190ff;
+  background-color: transparent;
+  border: 1px solid rgba(0, 118, 255, 0.1);
+  padding: 10px 7px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  border: 0px;
+  border-radius: 0px;
+  transition: all 0.2s ease-in-out 0s;
+  border: 1px solid rgba(0, 118, 255, 0.1);
+  border-radius: 6px;
+
+  & option {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 7px;
+    border-radius: 5px;
+    background-color: #f8f9ff;
+  }
+`
+const CardViewer = styled.div`
+  // display: flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  display: grid;
+  // justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 0.4rem;
+  grid-row-gap: 1rem;
+  // padding: 2rem 5rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    grid-column-gap: 0.2rem;
+    grid-row-gap: 1.5rem;
+  }
+`
 
 const DisplayRepositories = () => {
   const { isLoading, reposBySizeForkStars } = useContext(userDataContext)
@@ -28,60 +110,6 @@ const DisplayRepositories = () => {
     changeData(selects)
   }, [selects])
 
-  const Wrapper = styled.section`
-    @import url('https://fonts.googleapis.com/css2?family=Inter&family=Josefin+Sans:wght@400;700&display=swap');
-    background: #f8f9ff;
-    font-family: Inter, system, -apple-system, BlinkMacSystemFont, Roboto,
-      'Segoe UI', Arial, sans-serif;
-    font-smooth: always;
-    -webkit-font-smoothing: antialiased;
-    padding: 2rem 5rem;
-
-    @media (max-width: 500px) {
-      padding: 1rem;
-    }
-  `
-  const Container = styled.div`
-    max-width: 1400px;
-    margin: 0 auto;
-  `
-  const Header = styled.div`
-    border: 1px solid pink;
-    display: inline-div;
-    padding: 1rem 0;
-    font-size: 1.75rem;
-    font-weight: 500;
-    color: rgb(36, 41, 46);
-    margin-bottom: 1rem;
-
-    & a {
-      color: pink;
-      font-size: 1rem;
-      color: rgb(106, 115, 125);
-      margin: 0px 1rem;
-    }
-  `
-  const SpanSelect = styled.span`
-    border: 1px solid red;
-  `
-  const CardViewer = styled.div`
-    // display: flex;
-    // flex-direction: row;
-    // flex-wrap: wrap;
-    display: grid;
-    // justify-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 0.4rem;
-    grid-row-gap: 1rem;
-    // padding: 2rem 5rem;
-
-    @media (max-width: 900px) {
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      grid-column-gap: 0.2rem;
-      grid-row-gap: 1.5rem;
-    }
-  `
   return (
     <>
       {isLoading && <h2>Loading...</h2>}
@@ -91,14 +119,14 @@ const DisplayRepositories = () => {
           <Header>
             Top Repos <a>by</a>
             <SpanSelect>
-              <select
+              <Select
                 onChange={(e) => setSelects(e.target.value)}
                 value={selects}
               >
                 <option value='Size'>Size</option>
                 <option value='Stars'>Stars</option>
                 <option value='Fork'>Fork</option>
-              </select>
+              </Select>
             </SpanSelect>
           </Header>
           <CardViewer>

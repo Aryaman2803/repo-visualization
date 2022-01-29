@@ -20,27 +20,7 @@ const ContainerWrapper = styled.section`
 //! This file will have the homepage for creating 2 parts
 //! And loading screen until data is fetched
 const Container = () => {
-  const { isLoading, apiData, serverError } = useContext(userDataContext)
-
-  // if (isLoading && !serverError) {
-  //   return (
-  //     <OverrideWrapper>
-  //       {' '}
-  //       <RotateLoader size={30} color='#24292f' margin={35} />
-  //     </OverrideWrapper>
-  //   )
-  // }
-  // if (!isLoading && serverError) return <h1>Errorrr</h1>
-
-  // return (
-  //   <>
-  //     <ContainerWrapper>
-  //       <ReactQueryDevtools initialIsOpen={false} />
-
-  //       {apiData && <ProfileVisualize />}
-  //     </ContainerWrapper>
-  //   </>
-  // )
+  const { isLoading,  serverError } = useContext(userDataContext)
 
   return (
     <>
@@ -52,18 +32,14 @@ const Container = () => {
         ) : serverError ? (
           <h1>Error</h1>
         ) : (
+          <>
+          <ReactQueryDevtools/>
           <ProfileVisualize />
+          </>
         )}
       </ContainerWrapper>
     </>
   )
 }
 
-// {isLoading && (
-//   <OverrideWrapper>
-//     <RotateLoader size={30} color='#24292f' margin={35} />
-//   </OverrideWrapper>
-// )}
-// {serverError && <h1>Errorrr sheesh</h1>}
-// {apiData && <ProfileVisualize />}
 export default Container

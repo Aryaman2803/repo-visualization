@@ -6,10 +6,8 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 const queryClient = new QueryClient()
 
 ReactDOM.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient} contextSharing={true}>
-      <App />
-    </QueryClientProvider>
-  </React.StrictMode>,
+  <QueryClientProvider client={queryClient} contextSharing={true}>
+    <App />
+  </QueryClientProvider>,
   document.getElementById('root')
 )

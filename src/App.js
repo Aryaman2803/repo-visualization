@@ -12,7 +12,7 @@ const App = () => {
     reposPerLanguage,
     starGazers,
     reposBySizeForkStars,
-  } = useFetch('https://api.github.com/users/facebook')
+  } = useFetch('facebook')
   const userData = {
     isLoading,
     apiData,

@@ -2,19 +2,21 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import format from 'date-fns/format'
 import { useQuery } from 'react-query'
+import CACHE from 'localstorage-ttl'
 
-const useFetch = (url) => {
+const useFetch = (name) => {
   const [isLoading, setIsLoading] = useState(true)
   const [apiData, setApiData] = useState(null)
   const [serverError, setServerError] = useState(null)
   const [overAllLanguages, setoverAllLanguages] = useState()
   const [commitsTimeline, setcommitsTimeline] = useState()
   const [reposPerLanguage, setReposPerLanguage] = useState(null)
-  const [reposLanguagesUrl, setReposLanguagesUrl] = useState(null)
   const [starGazers, setStarGazers] = useState(null)
   const [reposBySizeForkStars, setReposBySizeForkStars] = useState(null)
 
- 
+  const url = `https://api.github.com/users/${name}`
+
+
 
   const langURL = url + '/repos?per_page=100'
   const config = {
@@ -37,38 +39,7 @@ const useFetch = (url) => {
   })
 
   const _isError = error1 || error2
-  // console.log("Error",_isError);
   const _isLoading = isLoading1 || isLoading2
-
-  // const fetchData = async () => {
-  //   try {
-  //     setIsLoading(true)
-  //     const reqone = await axios.get(url, { headers: config })
-  //     const reqtwo = await axios.get(langURL, { headers: config })
-
-  //     await axios.all([reqone, reqtwo]).then(
-  //       axios.spread((...responses) => {
-  //         const respOne = responses[0]?.data
-  //         const respTwo = responses[1]?.data
-
-  //         setApiData(respOne) //useState
-  //         overallLanguage(respTwo) //Function
-  //         overallCommits(respTwo) //Function
-
-  //         setTimeout(() => {
-  //           setIsLoading(false)
-  //         }, 1700)
-  //       })
-  //     )
-  //     // .catch((error) => {
-  //     //   setServerError(error)
-  //     //   setIsLoading(false)
-  //     // })
-  //   } catch (error) {
-  //     setServerError(error)
-  //     setIsLoading(false)
-  //   }
-  // }
 
   useEffect(() => {
     setIsLoading(true)
@@ -80,10 +51,9 @@ const useFetch = (url) => {
       overallCommits(reqtwo?.data)
       overallStargazers(reqtwo?.data)
       overallReposBySizeForkStars(reqtwo?.data)
-
-      setTimeout(() => {
-        setIsLoading(false)
-      }, 1700)
+      // setTimeout(() => {
+      //   setIsLoading(false)
+      // }, 1700)
     } else if (_isError === true) {
       setIsLoading(false)
       setServerError(true)
@@ -162,46 +132,53 @@ const useFetch = (url) => {
     }
 
     //Get data for commits timeline chart
-    getTimeline(allRepos)
+    getTimeline(allRepos, name)
     // getReposPerLanguages(allReposLanguagesURL)
   }
 
-  // const getTimeline2 = async (allRepos)=>{
-  //   const results = useQueries(
-  //     allRepos.map(repo=>{
-  //       return {
-  //         queryKey:['repo', repo.data],
-  //         queryFn:()=>axios.get(l, {headers:config})
-  //       }
-  //     })
+  // const getALL = async (repos) => {
+  //   const data = await axios.all(
+  //     repos.map((l) => axios.get(l, { headers: config }))
   //   )
+  //   return data
   // }
-  const getTimeline = async (allRepos) => {
-    const timeline = []
-    axios
-      .all(allRepos.map((l) => axios.get(l, { headers: config })))
-      .then(
-        axios.spread((...response) => {
-          for (let i of response) {
-            let innerData = i.data
-            for (let inn of innerData) {
-              const fetchedTime = inn.commit.committer.date
-              const formattedDate = format(new Date(fetchedTime), 'MM-yyyy')
-              timeline.push({ date: formattedDate })
+  const getTimeline = async (allRepos, name) => {
+    //If user already searched, fetch its data from cache
+    if (CACHE.get(name)) {
+      const check = CACHE.get(name)
+      setcommitsTimeline(check)
+      setIsLoading(false)
+    } else {
+      const timeline = []
+      let finalTimeline = []
+      await axios
+        .all(allRepos.map((l) => axios.get(l, { headers: config })))
+        .then(
+          axios.spread((...response) => {
+            for (let i of response) {
+              let innerData = i.data
+              for (let inn of innerData) {
+                const fetchedTime = inn.commit.committer.date
+                const formattedDate = format(new Date(fetchedTime), 'MM-yyyy')
+                timeline.push({ date: formattedDate })
+              }
             }
-          }
-          timeline.sort((a, b) => a.date.localeCompare(b.date))
-          let finalTimeline = []
+            timeline.sort((a, b) => a.date.localeCompare(b.date))
 
-          updateTimeline(finalTimeline, timeline)
-          setcommitsTimeline(finalTimeline)
-          // console.log(finalTimeline)
+            updateTimeline(finalTimeline, timeline)
+            setcommitsTimeline(finalTimeline)
+            setIsLoading(false)
+            // console.log(finalTimeline)
+          })
+        )
+        .catch((error) => {
+          setServerError(error)
+          console.log(error)
         })
-      )
-      .catch((error) => {
-        setServerError(error)
-        console.log(error)
-      })
+
+      //Storing final timeline into local storage to avoid fetch, with cache expiry of 5 hours
+      CACHE.set(name, finalTimeline, 60000 * 60 * 5)
+    }
   }
 
   //Data a commits per quarter timeline

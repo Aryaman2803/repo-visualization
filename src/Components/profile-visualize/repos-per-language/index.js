@@ -5,7 +5,6 @@ import ReposStarsChart from '../../Charts/repos-per-star'
 
 const Wrapper = styled.section`
   background: #f8f9ff;
-  // border: 1px solid teal;
   font-family: AllianceNo1, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
     Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, Helvetica Neue, Arial,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
@@ -28,28 +27,29 @@ const Container = styled.article`
 `
 
 const Span1 = styled.div`
-  padding: 1rem;
   font-size: 22px;
-  font-weight: 600;
   text-align: center;
+  padding: 1rem 0;
+  color: rgb(36, 41, 46);
+  font-size: 1.75rem;
+  font-weight: 500;
 `
 const Span2 = styled.div`
-  // border: 1px solid pink;
   margin-bottom: 3rem;
-  padding: 1rem;
-  font-size: 22px;
-  font-weight: 600;
   text-align: center;
+  padding: 1rem 0;
+  color: rgb(36, 41, 46);
+  font-size: 1.75rem;
+  font-weight: 500;
 
   @media (max-width: 1150px) {
     margin-bottom: 6rem;
   }
-  @media(max-width:900px){
-    margin-bottom:1rem;
+  @media (max-width: 900px) {
+    margin-bottom: 1rem;
   }
 `
 const Div = styled.div`
-  // border: 1px solid teal;
   width: 90%;
   max-width: 450px;
   padding-right: 1rem;
@@ -64,7 +64,6 @@ const Div = styled.div`
   }
 `
 const Div2 = styled.div`
-  // border: 2px solid orange;
   width: 650px;
 
   @media (max-width: 1150px) {
@@ -84,7 +83,6 @@ const Break = styled.div`
   margin: 0 auto;
   background-image: linear-gradient(to right, #40acff 0%, #d678ff 100%);
   border-radius: 50%;
-  // margin-bottom: 2rem;
 `
 const Repositories = () => {
   return (
