@@ -15,7 +15,7 @@ const useFetch = (name) => {
   const [starGazers, setStarGazers] = useState(null)
   const [reposBySizeForkStars, setReposBySizeForkStars] = useState(null)
 
-  const url = `https://api.github.com/users/${name}`
+  const url = `https://api.github.com/users/${name} `
 
   const TOKEN = `${process.env.REACT_APP_TOKEN}`
 
