@@ -28,7 +28,7 @@ const Wrapper = () => {
     reposBySizeForkStars,
   }
 
-  console.log(userData)
+  // console.log(userData)
 
   return (
     <userDataContext.Provider value={userData}>
