@@ -24,7 +24,7 @@ const App = () => {
     }
   }
 
-  useEffect(() => {}, [profile])
+  // useEffect(() => {}, [profile])
   return (
     <section>
       <form onSubmit={handleSubmit}>
