@@ -27,6 +27,20 @@ const LanguageContainer = styled.div`
   justify-content: center;
   align-content: center;
   margin: 0 auto;
+  color: rgb(36, 41, 46);
+  @import url('https://fonts.googleapis.com/css2?family=Inter&family=Josefin+Sans:wght@400;700&display=swap');
+  font-family: Inter, system, -apple-system, BlinkMacSystemFont, Roboto,
+    'Segoe UI', Arial, sans-serif;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+
+  & h3 {
+    font-family: Inter, system, -apple-system, BlinkMacSystemFont, Roboto,
+      'Segoe UI', Arial, sans-serif;
+    color: rgb(36, 41, 46);
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+  }
 `
 const GridContainer = styled.div`
   display: flex;
@@ -59,7 +73,13 @@ const Header = styled.header`
   padding: 1rem 0;
   color: rgb(36, 41, 46);
   font-size: 1.75rem;
-  font-weight: 500;
+  color: rgb(36, 41, 46);
+  @import url('https://fonts.googleapis.com/css2?family=Inter&family=Josefin+Sans:wght@400;700&display=swap');
+  font-family: Inter, system, -apple-system, BlinkMacSystemFont, Roboto,
+    'Segoe UI', Arial, sans-serif;
+  font-smooth: always;
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
 `
 
 const LogoCommits = ({ overAllLanguages }) => {
@@ -79,13 +99,20 @@ const LogoCommits = ({ overAllLanguages }) => {
       <LanguageImage imgSrc={item.imgSrc} key={item.name} name={item.name} />
     )
   })
+
   return (
     <>
       <Wrapper>
         <GridContainer>
           <SplitDiv>
             <Header>Languages</Header>
-            <LanguageContainer>{IndividualLanguageImage}</LanguageContainer>
+            <LanguageContainer>
+              {IndividualLanguageImage.length > 0 ? (
+                IndividualLanguageImage
+              ) : (
+                <h3>Nothing to show here!</h3>
+              )}
+            </LanguageContainer>
           </SplitDiv>
           <SplitDiv>
             <Header>Commits per quarter</Header>

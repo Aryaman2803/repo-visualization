@@ -9,7 +9,6 @@ const ReposPerLanguage = () => {
 
   const languages = Object.keys(reposPerLanguage)
   const counts = Object.values(reposPerLanguage)
-
   const options = {
     responsive: true,
     plugins: {

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import format from 'date-fns/format'
@@ -15,7 +14,7 @@ const useFetch = (name) => {
   const [starGazers, setStarGazers] = useState(null)
   const [reposBySizeForkStars, setReposBySizeForkStars] = useState(null)
 
-  const url = `https://api.github.com/users/${name} `
+  const url = `https://api.github.com/users/${name}`
 
   const TOKEN = `${process.env.REACT_APP_TOKEN}`
 
@@ -42,25 +41,7 @@ const useFetch = (name) => {
   const _isError = error1 || error2
   const _isLoading = isLoading1 || isLoading2
 
-  useEffect(() => {
-    setIsLoading(true)
-    // fetchData()
-
-    if (_isLoading === false) {
-      setApiData(reqone?.data)
-      overallLanguage(reqtwo?.data)
-      overallCommits(reqtwo?.data)
-      overallStargazers(reqtwo?.data)
-      overallReposBySizeForkStars(reqtwo?.data)
-      // setTimeout(() => {
-      //   setIsLoading(false)
-      // }, 1700)
-    } else if (_isError === true) {
-      setIsLoading(false)
-      setServerError(true)
-    }
-  }, [url, _isLoading, _isError])
-
+  //Store essential details that will be used by Sort By feature
   const overallReposBySizeForkStars = (data) => {
     const repos = []
     for (const key in data) {
@@ -75,24 +56,21 @@ const useFetch = (name) => {
       }
       repos.push(obj)
     }
-
     setReposBySizeForkStars(repos)
   }
 
   const overallStargazers = (data) => {
     const stargazers = []
-
     for (const key in data) {
       const obj = { name: data[key].name, stars: data[key].stargazers_count }
       stargazers.push(obj)
     }
-
     stargazers.sort((a, b) => b.stars - a.stars)
     if (stargazers.length >= 10) stargazers.splice(10)
     setStarGazers(stargazers)
   }
 
-  const overallLanguage = (data) => {
+  const overallLanguage = async (data) => {
     const lang = []
     let countNull = 0
     for (const key in data) {
@@ -113,9 +91,10 @@ const useFetch = (name) => {
       {}
     )
     countRepoLang['Unknowns'] = countNull
-    setReposPerLanguage(countRepoLang)
+    setReposPerLanguage(await countRepoLang)
   }
 
+  //Generate the repos url and pass it to getTimeline to the timeline
   const overallCommits = async (data) => {
     const allRepos = []
     const allReposLanguagesURL = [] //stores all repos language_url
@@ -126,8 +105,6 @@ const useFetch = (name) => {
         let newRepo = repo.replace('{/sha}', '')
         allRepos.push(newRepo)
 
-        const timeline = []
-        let finalTimeline = []
         allReposLanguagesURL.push(data[i].languages_url)
       }
     }
@@ -137,18 +114,14 @@ const useFetch = (name) => {
     // getReposPerLanguages(allReposLanguagesURL)
   }
 
-  // const getALL = async (repos) => {
-  //   const data = await axios.all(
-  //     repos.map((l) => axios.get(l, { headers: config }))
-  //   )
-  //   return data
-  // }
   const getTimeline = async (allRepos, name) => {
     //If user already searched, fetch its data from cache
-    if (CACHE.get(name)) {
-      const check = CACHE.get(name)
+    CACHE.get(name)
+    const check = CACHE.get(name)
+
+    if (check && check.length !== 0) {
       setcommitsTimeline(check)
-      setIsLoading(false)
+      // setIsLoading(false)
     } else {
       const timeline = []
       let finalTimeline = []
@@ -168,8 +141,9 @@ const useFetch = (name) => {
 
             updateTimeline(finalTimeline, timeline)
             setcommitsTimeline(finalTimeline)
-            setIsLoading(false)
-            // console.log(finalTimeline)
+            console.log('size: ', commitsTimeline)
+
+            // setIsLoading(false)
           })
         )
         .catch((error) => {
@@ -178,7 +152,7 @@ const useFetch = (name) => {
         })
 
       //Storing final timeline into local storage to avoid fetch, with cache expiry of 5 hours
-      CACHE.set(name, finalTimeline, 60000 * 60 * 5)
+      CACHE.set(name, finalTimeline, 60000 * 60 * 1)
     }
   }
 
@@ -198,14 +172,32 @@ const useFetch = (name) => {
         finalTimeline.push(obj)
       }
     }
-    // const newww = finalTimeline.sort((a, b) => a.date.localeCompare(b.date))
     finalTimeline.sort(function (a, b) {
       a = a.date.split('-')
       b = b.date.split('-')
       return new Date(a[1], a[0], 1) - new Date(b[1], b[0], 1)
     })
-    // console.log(finalTimeline);
   }
+
+  useEffect(() => {
+    setIsLoading(true)
+    // fetchData()
+
+    if (_isLoading === false) {
+      console.log('usefetch', name)
+      setApiData(reqone?.data)
+      overallLanguage(reqtwo?.data)
+      overallCommits(reqtwo?.data)
+      overallStargazers(reqtwo?.data)
+      overallReposBySizeForkStars(reqtwo?.data)
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 2500)
+    } else if (_isError === true) {
+      setIsLoading(false)
+      setServerError(true)
+    }
+  }, [_isLoading, reqone, reqtwo])
 
   return {
     isLoading,

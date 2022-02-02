@@ -4,9 +4,25 @@ import { eachQuarterOfInterval, format } from 'date-fns'
 import { Line } from 'react-chartjs-2'
 import Chart from 'chart.js/auto'
 import groupBy from 'lodash.groupby'
+import moment from 'moment'
 
 const CommitChart = () => {
   const { apiData, commitsTimeline } = useContext(userDataContext)
+
+  if(commitsTimeline===undefined || commitsTimeline.length ===0){
+    const data = {
+      labels: [],
+      datasets: [
+        {
+          label: 'Commits',
+          backgroundColor: 'rgb(91,163,255)',
+          borderColor: 'rgb(214,120,255)',
+          data: [],
+        },
+      ],
+    }
+    return <div><Line data={data}/></div>
+  }
 
   //Grouping commitsTimeline in quarters
   const groupedByYear = groupBy(commitsTimeline, function (item) {
@@ -121,8 +137,12 @@ const CommitChart = () => {
     const newDate = year + '-' + month
     return newDate
   }
-  const dateCreated = format(new Date(apiData.created_at), 'yyyy-MM')
-  const fetchedFirstCommitConverted = reverseDate(fetchedFirstCommit)
+  let dateCreated = format(new Date(apiData.created_at), 'yyyy-MM')
+  let fetchedFirstCommitConverted = reverseDate(fetchedFirstCommit)
+  if(moment(dateCreated).isSameOrAfter(fetchedFirstCommitConverted)){
+    console.log('after', dateCreated, fetchedFirstCommitConverted);
+    dateCreated = fetchedFirstCommitConverted
+  }
   const getEmptyTimeline = eachQuarterOfInterval({
     start: new Date(dateCreated),
     end: new Date(fetchedFirstCommitConverted),

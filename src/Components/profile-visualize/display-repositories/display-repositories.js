@@ -21,7 +21,6 @@ const Container = styled.div`
   margin: 0 auto;
 `
 const Header = styled.div`
-  border: 1px solid pink;
   display: inline-div;
   padding: 1rem 0;
   font-size: 1.75rem;
@@ -68,16 +67,16 @@ const Select = styled.select`
   }
 `
 const CardViewer = styled.div`
-  // display: flex;
-  // flex-direction: row;
-  // flex-wrap: wrap;
   display: grid;
-  // justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 0.4rem;
   grid-row-gap: 1rem;
   // padding: 2rem 5rem;
+
+  & h4{
+    font-weight:500;
+  }
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));

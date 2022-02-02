@@ -9,7 +9,6 @@ import DisplayRepositories from './display-repositories/display-repositories'
 const ProfileVisualize = () => {
   const { isLoading, apiData, serverError, overAllLanguages } =
     useContext(userDataContext)
-  // console.log(apiData)
   const {
     avatar_url,
     bio = null,
@@ -25,7 +24,7 @@ const ProfileVisualize = () => {
   } = apiData
   return (
     <>
-      <Navbar login={login} />
+      <Navbar login={login} avatar_url={avatar_url} />
       {!isLoading && !serverError && (
         <UserDetails
           avatar_url={avatar_url}
