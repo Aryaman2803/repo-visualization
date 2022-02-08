@@ -141,7 +141,6 @@ const useFetch = (name) => {
 
             updateTimeline(finalTimeline, timeline)
             setcommitsTimeline(finalTimeline)
-            console.log('size: ', commitsTimeline)
 
             // setIsLoading(false)
           })
@@ -184,7 +183,6 @@ const useFetch = (name) => {
     // fetchData()
 
     if (_isLoading === false) {
-      console.log('usefetch', name)
       setApiData(reqone?.data)
       overallLanguage(reqtwo?.data)
       overallCommits(reqtwo?.data)

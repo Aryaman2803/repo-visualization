@@ -33,7 +33,6 @@ const Container = () => {
           <h1>Error</h1>
         ) : (
           <>
-          <ReactQueryDevtools/>
           <ProfileVisualize />
           </>
         )}
