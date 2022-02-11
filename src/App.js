@@ -5,10 +5,6 @@ import styled from 'styled-components/macro'
 
 const Section = styled.section`
   height: 100vh;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
   background: rgb(248, 249, 255);
 `
 const Header = styled.header`
@@ -64,15 +60,23 @@ const Form = styled.form`
 `
 
 const InputBox = styled.input`
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: Inter, system, -apple-system, BlinkMacSystemFont, Roboto,
+    'Segoe UI', Arial, sans-serif;
+
   padding: 0.75rem;
   border: none;
   background-color: transparent;
   font-size: 2rem;
   width: 500px;
   height: 50px;
-  border-bottom: 1px solid black;
+  color: rgb(36, 41, 46);
+  font-weight: 500;
+  // border-bottom: 1px solid black;
+  border-bottom: 1px solid;
+  border-image-slice: 1;
+  border-width: 2px;
+  // border-image-source: linear-gradient(to left, #6dc7ff, #e6abff);
+  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
   &:focus {
     outline: none;
   }
@@ -124,19 +128,19 @@ const ErrorContainer = styled.div`
 const Suggestion = styled.div`
   width: 50%;
   margin: 4rem auto;
-  font-weight:300;
+  font-weight: 300;
   & span {
     font-size: 0.9rem;
     font-style: italic;
     display: block;
-    margin-bottom:5px;
+    margin-bottom: 5px;
   }
 
-  @media(max-width:700px){
-    width:70%;
+  @media (max-width: 700px) {
+    width: 70%;
   }
-  @media(max-width:500px){
-    width:90%;
+  @media (max-width: 500px) {
+    width: 90%;
   }
 `
 const App = () => {
@@ -211,8 +215,7 @@ const App = () => {
           Not sure where to look first? Here are some interesting profiles:
         </span>
         metafizzy, facebook, reactjs, mzabriskie, deepmind, pmndrs, the-pudding,
-        animate-css, marmelab, vuejs, gcanti,
-        ant-design, jaredpalmer
+        animate-css, marmelab, vuejs, gcanti, ant-design, jaredpalmer
       </Suggestion>
     </Section>
   )
